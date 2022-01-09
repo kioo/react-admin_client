@@ -1,6 +1,12 @@
 # 创建项目
 
-### yarn create react-app react-admin_client
+### `yarn create react-app react-admin_client`
+## 安装去除多余依赖的处理包
+### `yarn add react-app-rewired customize-cra babel-plugin-import`
+## 安装 router
+### `yarn add react-router-dom@5.0.0`
+
+
 
 ## Available Scripts
 
