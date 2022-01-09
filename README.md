@@ -1,12 +1,13 @@
 # 创建项目
-
 ### `yarn create react-app react-admin_client`
-## 安装去除多余依赖的处理包
-### `yarn add react-app-rewired customize-cra babel-plugin-import`
+
 ## 安装 router
 ### `yarn add react-router-dom@5.0.0`
 
-
+## 安装 antd
+### `yarn add antd`
+antd 需要处理css 加载问题，根据[最新的处理方法](https://ant.design/docs/react/use-with-create-react-app-cn)使用 craco 进行处理
+处理主题样式改变也统一使用上面链接里面的教程
 
 ## Available Scripts
 
