@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import {message,Button} from 'antd'
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.less';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
-
-
 
 import Login from './pages/login/Login';
 import Admin from './pages/admin/Admin';
@@ -11,10 +8,6 @@ import Admin from './pages/admin/Admin';
 
 
 export default class App extends Component {
-
-  handleClick = () =>{
-    message.success("按钮点击成功。。")
-  }
 
 
   render() {
