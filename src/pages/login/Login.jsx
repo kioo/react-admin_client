@@ -1,28 +1,42 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {reqLogin} from '../../api/index.js'
 import axios from 'axios';
 
 import './Login.less'
 import logo from './images/logo.png'
-
+/**
+ * 使用异步 箭头函数入参前加上 async 关键字，在需要异步的方法上放 await 关键字，用try 捕捉异常情况
+ */
 export default class Login extends Component {
-    onFinish = (values) => {
+    // 异步写法
+    onFinish = async (values) => {
         console.log('Received values of form: ', values);
         const {username,password} = values
-        reqLogin(username,password)
-        // axios.get(`/app/login`).then(
-        //     response => {
-        //         console.log(response)
-        //         this.props.updateAppState({isLoading:false,users:response.data.items})
-        //     },
-        //     error => {
-        //         console.log(error)
-        //         this.props.updateAppState({isLoading:false,err:error.message})
-        //     }
-        // )
-      };
+       
+        const result = await reqLogin(username,password);
+        console.log("成功了",result)
+        if(result.code === 0){
+            // 登录成功
+            message.success("登录成功")
+            this.props.history.replace("/admin")
+        }else{
+            // 登录失败
+            message.error("登录失败")
+        }
+        
+    };
+    // 同步写法
+    // onFinish = (values) => {
+    //     console.log('Received values of form: ', values);
+    //     const {username,password} = values
+    //     reqLogin(username,password).then(response =>{
+    //         console.log('成功了',response.data)
+    //     }).catch(error =>{
+    //         console.log("失败了",error)
+    //     })
+    // };
 
 
     render() {
