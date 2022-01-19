@@ -1,21 +1,49 @@
 import React, { Component } from 'react'
-import { Menu, Button } from 'antd';
-import {
-    AppstoreOutlined,
-    PieChartOutlined,
-    DesktopOutlined,
-    ContainerOutlined,
-    MailOutlined,
-} from '@ant-design/icons';
+import { Link, withRouter } from 'react-router-dom'
+import { Menu } from 'antd';
+
 
 import './index.less'
 import logo from '../../assets/images/logo.png'
-import { Link } from 'react-router-dom'
+import menuList from '../../config/menuConfig';
 
+const { SubMenu } = Menu;
+class LeftNav extends Component {
+    
+    getMenuNodes = (menuList) => {
+        const path = this.props.location.pathname
+        return menuList.map(item => {
+            if (!item.children) {
+                return (
+                    <Menu.Item key={item.key} icon={item.icon}>
+                        <Link to={item.key}>
+                            <span>{item.title}</span>
+                        </Link>
+                    </Menu.Item>
+                )
+            } else {
+                const cItem = item.children.find(cItem => cItem.key === path)
+                if(cItem){
+                    this.openKey = item.key
+                }
+                return (
+                <SubMenu key={item.key} icon={item.icon} title={item.title}>
+                    {this.getMenuNodes(item.children)}
+                </SubMenu>
+                )
 
-export default class LeftNav extends Component {
+            }
+
+        })
+    }
+    componentWillMount(){
+        this.menuNodes =this.getMenuNodes(menuList)
+    }
+
     render() {
-        const { SubMenu } = Menu;
+       const path = this.props.location.pathname
+       // 得到需要打开菜单项的key
+       const openKey = this.openKey
         return (
             <div className='left-nav'>
                 <Link to='/' className='left-nav-header'>
@@ -24,54 +52,19 @@ export default class LeftNav extends Component {
                 </Link>
                 <div>
                     <Menu
-                        defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['sub1']}
+                        defaultOpenKeys={[openKey]}
+                        selectedKeys={[path]}
+                        
                         mode="inline"
                         theme="dark"
                     >
-                        <Menu.Item key="/home" icon={<PieChartOutlined />}>
-                            <Link to="/home">
-                                <span>首页</span>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item key="/user" icon={<DesktopOutlined />}>
-                            <Link to="/user">
-                                用户管理
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item key="role" icon={<ContainerOutlined />}>
-                            <Link to="/role">
-                                角色管理
-                            </Link>
-                        </Menu.Item>
-                        <SubMenu key="sub1" icon={<MailOutlined />} title="商品">
-                            <Menu.Item key="/category" icon={<MailOutlined />}>
-                                <Link to="/category">
-                                    <span>品类管理</span>
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item key="/product" icon={<MailOutlined />}>
-                                <Link to="/product">
-                                    <span>商品管理</span>
-                                </Link>
-                            </Menu.Item>
-                        </SubMenu>
-                        <SubMenu key="sub2" icon={<AppstoreOutlined />} title="图形图表">
-                            <Menu.Item key="9">
-                                <Link to="/charts/pie">
-                                    <span>饼图</span>
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item key="10">
-
-                                <Link to="/charts/line">
-                                    <span>折线图</span>
-                                </Link>
-                            </Menu.Item>
-                        </SubMenu>
+                        {
+                           this.menuNodes
+                        }
                     </Menu>
                 </div>
             </div>
         )
     }
 }
+export default withRouter(LeftNav)
