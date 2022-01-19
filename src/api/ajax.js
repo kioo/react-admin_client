@@ -1,12 +1,12 @@
 
 import { message } from "antd"
 import axios from "axios"
+
 /**
  * 
  * 统一处理异常
  * 在外层包裹一个promise 对象，在请求出错时不 reject
  */
-
 export default function ajax(url, data={},type='GET'){
    return new Promise((resolve, reject) => {
       let promise

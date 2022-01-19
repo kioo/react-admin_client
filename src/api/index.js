@@ -10,7 +10,11 @@ export const reqLogin = (username,password) => ajax('/app/login',{username,passw
 
 export const reqAddUser = (user) => ajax('/manage/user/add',user,'POST')
 
-// 使用 jsonp 获取 天气信息，高德的接口
+/**
+ * 
+ * 使用 jsonp 获取 天气信息，高德的接口
+ * 使用 promise 对象包裹
+ */ 
 export const reqWeather = (city) => {
     return new Promise((reslove,reject) => {
         const url = `http://restapi.amap.com/v3/weather/weatherInfo?city=${city}&key=b12ade33927e7c27c91d6be853b52daa`
@@ -27,5 +31,3 @@ export const reqWeather = (city) => {
         })
     })
 }
-
-// reqWeather(610100)
